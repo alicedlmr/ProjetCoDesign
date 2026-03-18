@@ -4,20 +4,20 @@ use ieee.numeric_std.all;
 
 entity vga_axi is
     port (
-        clk   : in std_logic;  -- 65 MHz
-        rst   : in std_logic;
+        clk: in std_logic;  -- 65 MHz
+        rst: in std_logic;
 
         -- AXI Stream en entree (depuis DMA)
-        s_axis_tdata  : in  std_logic_vector(31 downto 0);
+        s_axis_tdata : in  std_logic_vector(31 downto 0);
         s_axis_tvalid : in  std_logic;
         s_axis_tready : out std_logic;
 
         -- Signaux VGA vers connecteur
         vga_hsync : out std_logic;
         vga_vsync : out std_logic;
-        vga_r     : out std_logic_vector(3 downto 0);
-        vga_g     : out std_logic_vector(3 downto 0);
-        vga_b     : out std_logic_vector(3 downto 0)
+        vga_r : out std_logic_vector(3 downto 0);
+        vga_g : out std_logic_vector(3 downto 0);
+        vga_b : out std_logic_vector(3 downto 0)
     );
 end entity vga_axi;
 
@@ -25,16 +25,16 @@ architecture rtl of vga_axi is
 
     -- Timings 1024x768 @ 60Hz
     constant H_VISIBLE : integer := 1024;
-    constant H_FRONT   : integer := 24;
-    constant H_SYNC    : integer := 136;
-    constant H_BACK    : integer := 160;
-    constant H_TOTAL   : integer := 1344;
+    constant H_FRONT : integer := 24;
+    constant H_SYNC : integer := 136;
+    constant H_BACK : integer := 160;
+    constant H_TOTAL : integer := 1344;
 
     constant V_VISIBLE : integer := 768;
-    constant V_FRONT   : integer := 3;
-    constant V_SYNC    : integer := 6;
-    constant V_BACK    : integer := 29;
-    constant V_TOTAL   : integer := 806;
+    constant V_FRONT : integer := 3;
+    constant V_SYNC : integer := 6;
+    constant V_BACK : integer := 29;
+    constant V_TOTAL : integer := 806;
 
     -- Compteurs
     signal h_count : unsigned(10 downto 0) := (others => '0');
