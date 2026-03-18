@@ -21,6 +21,14 @@ architecture bhv of tb_i2s_axis is
     constant TEST_LEFT  : std_logic_vector(31 downto 0) := x"A5A5A5A5";
     constant TEST_RIGHT : std_logic_vector(31 downto 0) := x"12345678";
 
+    -- Génération des horloges
+    -- T = 1 / 22 500 000 = 44.444 ns
+    constant ACLK_PERIOD : time := 44.44 ns; -- 22.5 MHz
+
+    -- BCLK = 44100 * 64 = 2.8224 MHz
+    -- T_bclk = 1 / 2 822 400 = 354.3 ns
+    constant BCLK_PERIOD : time := 354.3 ns;
+
 begin
     -- Instanciation de IP
     DUT : entity work.i2s_axis
@@ -36,9 +44,8 @@ begin
             m_axis_tready  => tready
         );
 
-    -- Génération des horloges
-    aclk <= not aclk after 5 ns;   -- 100 MHz
-    bclk <= not bclk after 160 ns; -- Env. 3.1 MHz
+    aclk <= not aclk after ACLK_PERIOD / 2;
+    bclk <= not bclk after BCLK_PERIOD / 2;
 
     -- Processus de stimulation
     process
