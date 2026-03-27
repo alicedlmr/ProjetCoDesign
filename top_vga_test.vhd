@@ -93,7 +93,7 @@ begin
     -- et du signal locked de la PLL (on reste en reset tant que
     -- la PLL n'est pas stable).
     -- -----------------------------------------------------------
-    rst <= (not sys_rst_n) or (not pll_locked);
+    rst <= (sys_rst_n) or (not pll_locked);
 
     -- -----------------------------------------------------------
     -- PLL Clocking Wizard (genere avec Vivado IP Catalog)
@@ -106,7 +106,7 @@ begin
             clk_in1  => sys_clk,
             clk_out1 => clk_65,
             locked   => pll_locked,
-            reset    => not sys_rst_n   -- reset actif haut pour la PLL
+            reset    => sys_rst_n   -- reset actif haut pour la PLL
         );
 
     -- -----------------------------------------------------------
